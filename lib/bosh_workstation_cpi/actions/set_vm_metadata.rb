@@ -1,5 +1,3 @@
-require "bosh_workstation_cpi/virtualbox"
-
 module BoshWorkstationCpi::Actions
   class SetVmMetadata
     # @param [String] vm vm id that was once returned by {#create_vm}
@@ -25,7 +23,8 @@ module BoshWorkstationCpi::Actions
 
     def set_metadata(vm)
       @logger.info("Setting metadata")
-      @vm_manager.create_artifact(vm.uuid, "metadata.json", JSON.dump(@metadata))
+      @vm_manager.create_artifact(
+        vm.uuid, "metadata.json", JSON.dump(@metadata))
     end
   end
 end
