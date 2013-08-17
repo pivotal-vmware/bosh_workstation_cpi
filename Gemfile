@@ -8,3 +8,5 @@ gemspec
 
 # Used for ./dev/console
 gem "pry"
+
+gem "rspec"
