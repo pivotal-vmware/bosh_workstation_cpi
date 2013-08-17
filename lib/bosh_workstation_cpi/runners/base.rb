@@ -2,7 +2,7 @@ require "shellwords"
 
 module BoshWorkstationCpi::Runners
   class Base
-    class Error < StandardError; end
+    class ExecuteError < RuntimeError; end
 
     def initialize(logger)
       @logger = logger
@@ -14,7 +14,7 @@ module BoshWorkstationCpi::Runners
 
     def execute!(*args)
       execute(*args).tap do |(exit_code, output)|
-        raise Error, "Command '#{args.inspect}' exited with non-0" \
+        raise ExecuteError, "Command '#{args.inspect}' exited with non-0" \
           unless exit_code.zero?
       end
     end
