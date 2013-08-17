@@ -24,15 +24,15 @@ module BoshWorkstationCpi::Runners
     end
 
     def upload!(src_dir, dst_dir)
-      raise NotImplementedError, "#{__method__}"
+      raise NotImplementedError, __method__
     end
 
     def put!(dst_path, contents)
-      raise NotImplementedError, "#{__method__}"
+      raise NotImplementedError, __method__
     end
 
     def get!(dst_path)
-      raise NotImplementedError, "#{__method__}"
+      raise NotImplementedError, __method__
     end
 
     protected

@@ -117,38 +117,32 @@ module BoshWorkstationCpi
     # @return [array[String]] list of opaque disk_ids that can be used with the
     #                         other disk-related methods on the CPI
     def get_disks(vm_id)
-      not_implemented(:get_disks)
+      raise NotImplementedError, __method__
     end
 
     # Get the vm_id of this host
     # @return [String] opaque id later used by other methods of the CPI
     def current_vm_id
-      not_implemented(:current_vm_id)
+      raise NotImplementedError, __method__
     end
 
     # Take snapshot of disk
     # @param [String] disk_id disk id of the disk to take the snapshot of
     # @return [String] snapshot id
     def snapshot_disk(disk_id, metadata={})
-      not_implemented(:snapshot_disk)
+      raise NotImplementedError, __method__
     end
 
     # Delete a disk snapshot
     # @param [String] snapshot_id snapshot id to delete
     def delete_snapshot(snapshot_id)
-      not_implemented(:delete_snapshot)
+      raise NotImplementedError, __method__
     end
 
     # Validates the deployment
     # @api not_yet_used
     def validate_deployment(old_manifest, new_manifest)
-      not_implemented(:validate_deployment)
-    end
-
-    private
-
-    def not_implemented(method)
-      raise NotImplemented, "`#{method}' is not implemented by #{self.class}"
+      raise NotImplementedError, __method__
     end
   end
 end
