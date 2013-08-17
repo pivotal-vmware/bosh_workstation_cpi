@@ -29,6 +29,7 @@ module BoshWorkstationCpi
         )
       end
 
+      runner = Runners::Timed.new(runner, @logger)
       driver = Virtualbox::Driver.new(runner, @logger)
 
       @stemcell_manager = Managers::Stemcell.new(

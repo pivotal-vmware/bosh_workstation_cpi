@@ -59,7 +59,7 @@ cloud:
         - ignored-value
 
 logging:
-  level: INFO
+  level: DEBUG
 
 dir:
 
