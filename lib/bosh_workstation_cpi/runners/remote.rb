@@ -1,7 +1,6 @@
 require "net/ssh"
 require "net/scp"
 require "tempfile"
-require "shellwords"
 require "bosh_workstation_cpi/runners/base"
 
 module BoshWorkstationCpi::Runners
@@ -13,6 +12,25 @@ module BoshWorkstationCpi::Runners
       @password = password
       @ssh_lock = Mutex.new
     end
+
+    def upload!(src_dir, dst_dir)
+      ssh_lock { ssh.scp.upload!(src_dir, dst_dir, recursive: true) }
+    end
+
+    def put!(dst_path, contents)
+      tmp = Tempfile.new("remote_runner.put")
+      tmp.write(contents)
+      tmp.flush
+      ssh_lock { ssh.scp.upload!(tmp.path, dst_path) }
+    end
+
+    def get!(dst_path)
+      tmp = Tempfile.new("remote_runner.get")
+      ssh_lock { ssh.scp.download!(dst_path, tmp.path) }
+      File.read(tmp.path)
+    end
+
+    protected
 
     def execute_raw(cmd)
       logger.info("remote_runner.#{__method__} host=#{cmd}")
@@ -37,23 +55,6 @@ module BoshWorkstationCpi::Runners
       end
 
       [exit_status, output]
-    end
-
-    def upload!(src_dir, dst_dir)
-      ssh_lock { ssh.scp.upload!(src_dir, dst_dir, recursive: true) }
-    end
-
-    def put!(dst_path, contents)
-      tmp = Tempfile.new("remote_runner.put")
-      tmp.write(contents)
-      tmp.flush
-      ssh_lock { ssh.scp.upload!(tmp.path, dst_path) }
-    end
-
-    def get!(dst_path)
-      tmp = Tempfile.new("remote_runner.get")
-      ssh_lock { ssh.scp.download!(dst_path, tmp.path) }
-      File.read(tmp.path)
     end
 
     private

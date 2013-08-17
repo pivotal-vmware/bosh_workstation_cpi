@@ -8,10 +8,6 @@ module BoshWorkstationCpi::Runners
       @logger = logger
     end
 
-    def execute_raw(cmd)
-      raise NotImplementedError, "#{__method__}"
-    end
-
     def execute(*cmd_pieces)
       execute_raw(Shellwords.shelljoin(cmd_pieces))
     end
@@ -38,5 +34,9 @@ module BoshWorkstationCpi::Runners
     protected
 
     attr_reader :logger
+
+    def execute_raw(cmd)
+      raise NotImplementedError, __method__
+    end
   end
 end
